@@ -1,0 +1,25 @@
+﻿version: '3.8'
+
+services:
+#  desafiogestionna:
+#    image: desafiogestionna
+#    build:
+#      context: .
+#      dockerfile: DesafioGestionna/Dockerfile
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: local
+      POSTGRES_PASSWORD: local
+      POSTGRES_DB: gestionnna
+    volumes:
+      # Mount the local directory to the container's init directory
+      - ./init-scripts:/docker-entrypoint-initdb.d
+      # Persist the actual database data
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
