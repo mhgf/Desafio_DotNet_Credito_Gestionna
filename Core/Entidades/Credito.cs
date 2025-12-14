@@ -1,4 +1,4 @@
-namespace DesafioGestionna.Entidades;
+namespace Core.Entidades;
 
 public class Credito
 {
