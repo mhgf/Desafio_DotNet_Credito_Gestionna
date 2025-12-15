@@ -1,7 +1,6 @@
-using System.Data;
 using FluentValidation;
 
-namespace Core.Servicos.Dtos;
+namespace Shared.ServiceBus.Dtos;
 
 public record CreditoRequestDto(
     string NumeroCredito,

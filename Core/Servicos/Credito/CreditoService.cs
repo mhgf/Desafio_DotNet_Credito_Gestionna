@@ -1,6 +1,6 @@
 using Ardalis.Result;
-using Core.Servicos.Dtos;
-using Core.Servicos.ServiceBus;
+using Shared.ServiceBus;
+using Shared.ServiceBus.Dtos;
 
 namespace Core.Servicos.Credito;
 

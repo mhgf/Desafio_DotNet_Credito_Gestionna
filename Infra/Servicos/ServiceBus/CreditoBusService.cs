@@ -1,13 +1,12 @@
 using System.Text;
-using System.Text.Json;
 using Ardalis.Result;
 using Azure.Messaging.ServiceBus.Administration;
-using Core.Servicos.Dtos;
-using Core.Servicos.ServiceBus;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Options;
 using Shared.Config;
 using Shared.Json;
+using Shared.ServiceBus;
+using Shared.ServiceBus.Dtos;
 
 namespace Infra.Servicos.ServiceBus;
 
@@ -46,6 +45,29 @@ public sealed class CreditoBusService : ICreditoBusService, IDisposable, IAsyncD
         }
 
         return Result.Success();
+    }
+
+    public Task RegistrarHandler(Func<QueueClient, Func<Message, CancellationToken, Task>> handler)
+    {
+        var messageHandlerOptions = new MessageHandlerOptions(ExceptionReceivedHandler)
+        {
+            MaxConcurrentCalls = 1,
+            AutoComplete = false
+        };
+
+        _queueClient.RegisterMessageHandler(handler(_queueClient), messageHandlerOptions);
+        return Task.CompletedTask;
+    }
+
+    private Task ExceptionReceivedHandler(ExceptionReceivedEventArgs exceptionReceivedEventArgs)
+    {
+        Console.WriteLine($"Erro no handler:   {exceptionReceivedEventArgs.Exception}.");
+        var context = exceptionReceivedEventArgs.ExceptionReceivedContext;
+        Console.WriteLine("Exception contexto:");
+        Console.WriteLine($"- Endpoint: {context.Endpoint}");
+        Console.WriteLine($"- Entity Path: {context.EntityPath}");
+        Console.WriteLine($"- Executing Action: {context.Action}");
+        return Task.CompletedTask;
     }
 
     public void Dispose() => DisposeAsync().GetAwaiter().GetResult();

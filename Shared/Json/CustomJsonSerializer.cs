@@ -15,7 +15,7 @@ public static class CustomJsonSerializer
         return JsonSerializer.Serialize(value, _settings);
     }
 
-    public static T Deserialize<T>(string json)
+    public static T? Deserialize<T>(string json)
     {
         return JsonSerializer.Deserialize<T>(json, _settings);
     }

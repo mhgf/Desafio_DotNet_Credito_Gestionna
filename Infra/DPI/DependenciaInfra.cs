@@ -1,6 +1,6 @@
-using Core.Servicos.ServiceBus;
 using Infra.Servicos.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.ServiceBus;
 
 namespace Infra.DPI;
 

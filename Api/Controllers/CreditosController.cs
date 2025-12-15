@@ -1,7 +1,7 @@
 using Core.Servicos.Credito;
-using Core.Servicos.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Ardalis.Result.AspNetCore;
+using Shared.ServiceBus.Dtos;
 
 namespace DesafioGestionna.Api.Controllers;
 
@@ -15,7 +15,8 @@ public class CreditosController : ControllerBase
         => _creditoService = creditoService;
 
     [HttpPost("integrar-credito-constituido")]
-    public async Task<ActionResult> IntegrarCreditoConstituidoAsync([FromBody] List<CreditoRequestDto> creditoRequestDtos)
+    public async Task<ActionResult> IntegrarCreditoConstituidoAsync(
+        [FromBody] List<CreditoRequestDto> creditoRequestDtos)
     {
         var resultado = await _creditoService.IntegraCreditoConstituidoAsync(creditoRequestDtos);
         return resultado.ToActionResult(this);

@@ -1,7 +1,7 @@
 using Core.DPI;
+using DesafioGestionna.Api.Handlers;
 using Infra.DPI;
 using Shared.Config;
-using Shared.Json;
 using Shared.Json.Converters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +17,8 @@ builder.Services.Configure<ServiceBusConfig>(builder.Configuration.GetSection("A
 
 builder.Services.AddDependicaCore();
 builder.Services.AddDependenciaInfra();
+
+builder.Services.AddHostedService<InserirCreditoContituidoHandler>();
 
 var app = builder.Build();
 
