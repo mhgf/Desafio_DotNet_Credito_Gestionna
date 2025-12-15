@@ -10,10 +10,10 @@ public record CreditoRequestDto(
     decimal ValorIssqn,
     string TipoCredito,
     bool SimplesNacional,
-    decimal Aliquata,
+    decimal Aliquota,
     decimal ValorFaturado,
-    decimal ValorDecucao,
-    decimal ValorCalculo);
+    decimal ValorDeducao,
+    decimal BaseCalculo);
 
 public class CreditoRequestDtoValidator : AbstractValidator<CreditoRequestDto>
 {
@@ -32,11 +32,11 @@ public class CreditoRequestDtoValidator : AbstractValidator<CreditoRequestDto>
             .GreaterThan(0).WithMessage("O campo {PropertyName} não pode ser negativo ou zero");
         RuleFor(x => x.ValorFaturado)
             .GreaterThan(0).WithMessage("O campo {PropertyName} não pode ser negativo ou zero");
-        RuleFor(x => x.ValorDecucao)
+        RuleFor(x => x.ValorDeducao)
             .GreaterThan(0).WithMessage("O campo {PropertyName} não pode ser negativo ou zero");
-        RuleFor(x => x.ValorCalculo)
+        RuleFor(x => x.BaseCalculo)
             .GreaterThan(0).WithMessage("O campo {PropertyName} não pode ser negativo ou zero");
-        RuleFor(x => x.Aliquata)
+        RuleFor(x => x.Aliquota)
             .GreaterThan(0).WithMessage("O campo {PropertyName} não pode ser negativo ou zero");
 
         RuleFor(x => x.TipoCredito)
