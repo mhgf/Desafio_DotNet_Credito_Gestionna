@@ -6,4 +6,6 @@ namespace Core.Servicos.Credito;
 public interface ICreditoService
 {
     Task<Result> IntegraCreditoConstituidoAsync(IList<CreditoRequestDto> creditoRequestDtos);
+    
+    Task<Result> InsertCreditoAsync(CreditoRequestDto creditoRequestDto);
 }

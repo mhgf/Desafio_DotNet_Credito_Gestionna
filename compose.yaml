@@ -1,11 +1,9 @@
-﻿version: '3.8'
-
-services:
-#  desafiogestionna:
-#    image: desafiogestionna
-#    build:
-#      context: .
-#      dockerfile: DesafioGestionna/Dockerfile
+﻿services:
+  #  desafiogestionna:
+  #    image: desafiogestionna
+  #    build:
+  #      context: .
+  #      dockerfile: DesafioGestionna/Dockerfile
   db:
     image: postgres:latest
     restart: always

@@ -9,8 +9,50 @@ public class Credito
     public decimal ValorIssqn { get; private set; }
     public string TipoCredito { get; private set; }
     public bool SimplesNacional { get; private set; }
-    public decimal Aliquata { get; private set; }
+    public decimal Aliquota { get; private set; }
     public decimal ValorFaturado { get; private set; }
     public decimal ValorDeducao { get; private set; }
     public decimal BaseCalculo { get; private set; }
+
+    private Credito()
+    {
+    }
+
+    private Credito(
+        string numeroCredito,
+        string numeroNfse,
+        DateOnly dataConstituicao,
+        decimal valorIssqn,
+        string tipoCredito,
+        bool simplesNacional,
+        decimal aliquota,
+        decimal valorFaturado,
+        decimal valorDeducao,
+        decimal baseCalculo)
+    {
+        NumeroCredito = numeroCredito;
+        NumeroNfse = numeroNfse;
+        DataConstituicao = dataConstituicao;
+        ValorIssqn = valorIssqn;
+        TipoCredito = tipoCredito;
+        SimplesNacional = simplesNacional;
+        Aliquota = aliquota;
+        ValorFaturado = valorFaturado;
+        ValorDeducao = valorDeducao;
+        BaseCalculo = baseCalculo;
+    }
+
+    public static Credito Create(
+        string numeroCredito,
+        string numeroNfse,
+        DateOnly dataConstituicao,
+        decimal valorIssqn,
+        string tipoCredito,
+        bool simplesNacional,
+        decimal aliquota,
+        decimal valorFaturado,
+        decimal valorDeducao,
+        decimal baseCalculo) =>
+        new(numeroCredito, numeroNfse, dataConstituicao, valorIssqn, tipoCredito, simplesNacional, aliquota,
+            valorFaturado, valorDeducao, baseCalculo);
 }
