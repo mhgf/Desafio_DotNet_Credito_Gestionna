@@ -14,6 +14,22 @@ public class CreditosController : ControllerBase
     public CreditosController(ICreditoService creditoService)
         => _creditoService = creditoService;
 
+    [HttpGet("{numeroNfse}")]
+    public async Task<ActionResult<IEnumerable<CreditoRequestDto>>> GetByNfse(string numeroNfse,
+        CancellationToken cancellationToken = default)
+    {
+        var resultado = await _creditoService.GetCreditoByNfseAsync(numeroNfse, cancellationToken);
+        return resultado.ToActionResult(this);
+    }
+
+    [HttpGet("credito/{numeroCredito}")]
+    public async Task<ActionResult<CreditoRequestDto>> GetByCredito(string numeroCredito,
+        CancellationToken cancellationToken = default)
+    {
+        var resultado = await _creditoService.GetCreditoByCreditoAsync(numeroCredito, cancellationToken);
+        return resultado.ToActionResult(this);
+    }
+
     [HttpPost("integrar-credito-constituido")]
     public async Task<ActionResult> IntegrarCreditoConstituidoAsync(
         [FromBody] List<CreditoRequestDto> creditoRequestDtos)

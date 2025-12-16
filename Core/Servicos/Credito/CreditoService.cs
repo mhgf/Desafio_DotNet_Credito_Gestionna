@@ -57,4 +57,44 @@ public class CreditoService : ICreditoService
 
         return Result.Success();
     }
+
+    public async Task<Result<IEnumerable<CreditoRequestDto>>> GetCreditoByNfseAsync(string numeroNfse,
+        CancellationToken cancellationToken = default)
+    {
+        var lista = await _creditoRepository.GetAllAsync(
+            (credito => credito.NumeroNfse == numeroNfse),
+            credito => new CreditoRequestDto(
+                credito.NumeroCredito,
+                credito.NumeroNfse,
+                credito.DataConstituicao,
+                credito.ValorIssqn,
+                credito.TipoCredito,
+                credito.SimplesNacional,
+                credito.Aliquota,
+                credito.ValorFaturado,
+                credito.ValorDeducao,
+                credito.BaseCalculo));
+
+        return Result.Success(lista);
+    }
+
+    public async Task<Result<CreditoRequestDto>> GetCreditoByCreditoAsync(string numeroCredito,
+        CancellationToken cancellationToken = default)
+    {
+        var credito = await _creditoRepository.GetOneAsync(
+            credito => credito.NumeroCredito == numeroCredito,
+            credito => new CreditoRequestDto(
+                credito.NumeroCredito,
+                credito.NumeroNfse,
+                credito.DataConstituicao,
+                credito.ValorIssqn,
+                credito.TipoCredito,
+                credito.SimplesNacional,
+                credito.Aliquota,
+                credito.ValorFaturado,
+                credito.ValorDeducao,
+                credito.BaseCalculo));
+
+        return credito is null ? Result.NotFound(numeroCredito) : Result.Success(credito);
+    }
 }
