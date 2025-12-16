@@ -3,11 +3,11 @@ namespace Core.Entidades;
 public class Credito
 {
     public long Id { get; private set; }
-    public string NumeroCredito { get; private set; }
-    public string NumeroNfse { get; private set; }
+    public string NumeroCredito { get; private set; } = null!;
+    public string NumeroNfse { get; private set; } = null!;
     public DateOnly DataConstituicao { get; private set; }
     public decimal ValorIssqn { get; private set; }
-    public string TipoCredito { get; private set; }
+    public string TipoCredito { get; private set; } = null!;
     public bool SimplesNacional { get; private set; }
     public decimal Aliquota { get; private set; }
     public decimal ValorFaturado { get; private set; }
