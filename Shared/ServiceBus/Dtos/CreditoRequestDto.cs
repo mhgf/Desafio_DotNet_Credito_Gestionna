@@ -1,4 +1,6 @@
+using System.Text.Json.Serialization;
 using FluentValidation;
+using Shared.Json.Converters;
 
 namespace Shared.ServiceBus.Dtos;
 
@@ -8,7 +10,7 @@ public record CreditoRequestDto(
     DateOnly DataConstituicao,
     decimal ValorIssqn,
     string TipoCredito,
-    bool SimplesNacional,
+    [property: JsonConverter(typeof(BoolJsonConverter))] bool SimplesNacional,
     decimal Aliquota,
     decimal ValorFaturado,
     decimal ValorDeducao,

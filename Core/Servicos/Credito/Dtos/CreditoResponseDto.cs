@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+using Shared.Json.Converters;
+
 namespace Core.Servicos.Credito.Dtos;
 
 public sealed record CreditoResponseDto(
@@ -6,7 +9,7 @@ public sealed record CreditoResponseDto(
     DateOnly DataConstituicao,
     decimal ValorIssqn,
     string TipoCredito,
-    bool SimplesNacional,
+    [property: JsonConverter(typeof(BoolJsonConverter))]  bool SimplesNacional,
     decimal Aliquota,
     decimal ValorFaturado,
     decimal ValorDeducao,

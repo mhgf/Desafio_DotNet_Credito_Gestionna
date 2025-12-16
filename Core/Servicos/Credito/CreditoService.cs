@@ -28,7 +28,8 @@ public class CreditoService : ICreditoService
 
         var resultado = await _busService.EnviarCreditoConstituido(creditoRequestDtos);
 
-        if (resultado.IsSuccess) return Result.Success(new SimplesResponseDto(true));
+        if (resultado.IsSuccess)
+            return Result.Success(new SimplesResponseDto(true));
         return resultado;
     }
 
