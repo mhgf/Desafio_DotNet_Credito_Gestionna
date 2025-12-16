@@ -24,9 +24,7 @@
       POSTGRES_PASSWORD: local
       POSTGRES_DB: gestionnna
     volumes:
-      # Mount the local directory to the container's init directory
       - ./init-scripts:/docker-entrypoint-initdb.d
-      # Persist the actual database data
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
@@ -38,3 +36,4 @@ volumes:
 networks:
   api-net:
   db-net:
+    internal: true
