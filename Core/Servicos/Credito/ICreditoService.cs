@@ -1,11 +1,12 @@
 using Ardalis.Result;
+using Core.Servicos.Credito.Dtos;
 using Shared.ServiceBus.Dtos;
 
 namespace Core.Servicos.Credito;
 
 public interface ICreditoService
 {
-    Task<Result> IntegraCreditoConstituidoAsync(IList<CreditoRequestDto> creditoRequestDtos);
+    Task<Result<SimplesResponseDto>> IntegraCreditoConstituidoAsync(IList<CreditoRequestDto> creditoRequestDtos);
 
     Task<Result> InsertCreditoAsync(CreditoRequestDto creditoRequestDto);
 

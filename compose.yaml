@@ -1,9 +1,21 @@
 ﻿services:
-  #  desafiogestionna:
-  #    image: desafiogestionna
-  #    build:
-  #      context: .
-  #      dockerfile: DesafioGestionna/Dockerfile
+  desafiogestionna:
+    depends_on:
+      - db
+    image: desafiogestionna
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    environment:
+      AzureServiceBus__QueueName: ${ServiceBus_Queue}
+      ConnectionStrings__DefaultConnection: "Host=db; Port=5432; Username=local; Password=local; Database=gestionnna"
+      AzureServiceBus__ConnectionString: ${ServiceBus_Connection}
+    ports:
+      - "4002:80"
+    networks:
+      - api-net
+      - db-net
+  
   db:
     image: postgres:latest
     restart: always
@@ -18,6 +30,11 @@
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - db-net
 
 volumes:
   postgres_data:
+networks:
+  api-net:
+  db-net:

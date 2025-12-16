@@ -1,5 +1,6 @@
 using Ardalis.Result;
 using Core.Repositorios;
+using Core.Servicos.Credito.Dtos;
 using Shared.ServiceBus;
 using Shared.ServiceBus.Dtos;
 
@@ -14,7 +15,8 @@ public class CreditoService : ICreditoService
         => (_busService, _creditoRepository) = (busService, creditoRepository);
 
 
-    public async Task<Result> IntegraCreditoConstituidoAsync(IList<CreditoRequestDto> creditoRequestDtos)
+    public async Task<Result<SimplesResponseDto>> IntegraCreditoConstituidoAsync(
+        IList<CreditoRequestDto> creditoRequestDtos)
     {
         var validador = new CreditoRequestDtoValidator();
         foreach (var requestDto in creditoRequestDtos)
@@ -24,7 +26,10 @@ public class CreditoService : ICreditoService
                 return Result.Invalid(validacao.Errors.Select(x => new ValidationError(x.ErrorMessage)));
         }
 
-        return await _busService.EnviarCreditoConstituido(creditoRequestDtos);
+        var resultado = await _busService.EnviarCreditoConstituido(creditoRequestDtos);
+
+        if (resultado.IsSuccess) return Result.Success(new SimplesResponseDto(true));
+        return resultado;
     }
 
     public async Task<Result> InsertCreditoAsync(CreditoRequestDto creditoRequestDto)

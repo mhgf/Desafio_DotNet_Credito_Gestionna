@@ -6,17 +6,20 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["DesafioGestionna/DesafioGestionna.csproj", "DesafioGestionna/"]
-RUN dotnet restore "DesafioGestionna/DesafioGestionna.csproj"
+COPY ["Api/Api.csproj", "Api/"]
+COPY ["Core/Core.csproj", "Core/"]
+COPY ["Infra/Infra.csproj", "Infra/"]
+COPY ["Directory.Packages.props", "/"]
+RUN dotnet restore "Api/Api.csproj"
 COPY . .
-WORKDIR "/src/DesafioGestionna"
-RUN dotnet build "./DesafioGestionna.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Api"
+RUN dotnet build "./Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./DesafioGestionna.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DesafioGestionna.dll"]
+ENTRYPOINT ["dotnet", "Api.dll"]
