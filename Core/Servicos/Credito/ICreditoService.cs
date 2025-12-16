@@ -10,6 +10,6 @@ public interface ICreditoService
 
     Task<Result> InsertCreditoAsync(CreditoRequestDto creditoRequestDto);
 
-    Task<Result<IEnumerable<CreditoRequestDto>>> GetCreditoByNfseAsync(string numeroNfse, CancellationToken cancellationToken = default);
-    Task<Result<CreditoRequestDto>> GetCreditoByCreditoAsync(string numeroCredito, CancellationToken cancellationToken = default);
+    Task<Result<IEnumerable<CreditoResponseDto>>> GetCreditoByNfseAsync(string numeroNfse, CancellationToken cancellationToken = default);
+    Task<Result<CreditoResponseDto>> GetCreditoByCreditoAsync(string numeroCredito, CancellationToken cancellationToken = default);
 }

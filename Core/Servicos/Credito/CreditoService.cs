@@ -63,43 +63,57 @@ public class CreditoService : ICreditoService
         return Result.Success();
     }
 
-    public async Task<Result<IEnumerable<CreditoRequestDto>>> GetCreditoByNfseAsync(string numeroNfse,
+    public async Task<Result<IEnumerable<CreditoResponseDto>>> GetCreditoByNfseAsync(string numeroNfse,
         CancellationToken cancellationToken = default)
     {
-        var lista = await _creditoRepository.GetAllAsync(
-            (credito => credito.NumeroNfse == numeroNfse),
-            credito => new CreditoRequestDto(
-                credito.NumeroCredito,
-                credito.NumeroNfse,
-                credito.DataConstituicao,
-                credito.ValorIssqn,
-                credito.TipoCredito,
-                credito.SimplesNacional,
-                credito.Aliquota,
-                credito.ValorFaturado,
-                credito.ValorDeducao,
-                credito.BaseCalculo));
+        try
+        {
+            var lista = await _creditoRepository.GetAllAsync(
+                (credito => credito.NumeroNfse == numeroNfse),
+                credito => new CreditoResponseDto(
+                    credito.NumeroCredito,
+                    credito.NumeroNfse,
+                    credito.DataConstituicao,
+                    credito.ValorIssqn,
+                    credito.TipoCredito,
+                    credito.SimplesNacional,
+                    credito.Aliquota,
+                    credito.ValorFaturado,
+                    credito.ValorDeducao,
+                    credito.BaseCalculo));
 
-        return Result.Success(lista);
+            return Result.Success(lista);
+        }
+        catch (Exception e)
+        {
+            return Result.Error(e.Message);
+        }
     }
 
-    public async Task<Result<CreditoRequestDto>> GetCreditoByCreditoAsync(string numeroCredito,
+    public async Task<Result<CreditoResponseDto>> GetCreditoByCreditoAsync(string numeroCredito,
         CancellationToken cancellationToken = default)
     {
-        var credito = await _creditoRepository.GetOneAsync(
-            credito => credito.NumeroCredito == numeroCredito,
-            credito => new CreditoRequestDto(
-                credito.NumeroCredito,
-                credito.NumeroNfse,
-                credito.DataConstituicao,
-                credito.ValorIssqn,
-                credito.TipoCredito,
-                credito.SimplesNacional,
-                credito.Aliquota,
-                credito.ValorFaturado,
-                credito.ValorDeducao,
-                credito.BaseCalculo));
+        try
+        {
+            var credito = await _creditoRepository.GetOneAsync(
+                credito => credito.NumeroCredito == numeroCredito,
+                credito => new CreditoResponseDto(
+                    credito.NumeroCredito,
+                    credito.NumeroNfse,
+                    credito.DataConstituicao,
+                    credito.ValorIssqn,
+                    credito.TipoCredito,
+                    credito.SimplesNacional,
+                    credito.Aliquota,
+                    credito.ValorFaturado,
+                    credito.ValorDeducao,
+                    credito.BaseCalculo));
 
-        return credito is null ? Result.NotFound(numeroCredito) : Result.Success(credito);
+            return credito is null ? Result.NotFound(numeroCredito) : Result.Success(credito);
+        }
+        catch (Exception e)
+        {
+            return Result.Error(e.Message);
+        }
     }
 }

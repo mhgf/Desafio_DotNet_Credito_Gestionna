@@ -16,7 +16,7 @@ public class CreditosController : ControllerBase
         => _creditoService = creditoService;
 
     [HttpGet("{numeroNfse}")]
-    public async Task<ActionResult<IEnumerable<CreditoRequestDto>>> GetByNfse(string numeroNfse,
+    public async Task<ActionResult<IEnumerable<CreditoResponseDto>>> GetByNfse(string numeroNfse,
         CancellationToken cancellationToken = default)
     {
         var resultado = await _creditoService.GetCreditoByNfseAsync(numeroNfse, cancellationToken);
@@ -24,7 +24,7 @@ public class CreditosController : ControllerBase
     }
 
     [HttpGet("credito/{numeroCredito}")]
-    public async Task<ActionResult<CreditoRequestDto>> GetByCredito(string numeroCredito,
+    public async Task<ActionResult<CreditoResponseDto>> GetByCredito(string numeroCredito,
         CancellationToken cancellationToken = default)
     {
         var resultado = await _creditoService.GetCreditoByCreditoAsync(numeroCredito, cancellationToken);
